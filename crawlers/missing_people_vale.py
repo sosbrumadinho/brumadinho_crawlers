@@ -1,7 +1,15 @@
-import re
 import csv
+import os
+import re
+
 import requests
 from bs4 import BeautifulSoup
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+DATA_CSV = os.path.join(DATA_DIR, 'data.csv')
+DATA_COMPARE_CSV = os.path.join(DATA_DIR, 'data_compare.csv')
 
 
 class Crawler:
@@ -25,9 +33,9 @@ if __name__ == "__main__":
     html = crawler.get_raw_data()
     dt, pessoas = crawler.parse_html(html)
 
-    with open('data.csv', encoding='utf-8') as csvfile:
+    with open(DATA_CSV, encoding='utf-8') as csvfile:
         spamreader = csv.reader(csvfile)
-        with open('data_compare.csv', 'w', encoding='utf-8') as f:
+        with open(DATA_COMPARE_CSV, 'w', encoding='utf-8') as f:
             csv_writer = csv.writer(f)
             csv_writer.writerow(('Nome', 'Última Atualização', 'Status'))
             for row in spamreader:
